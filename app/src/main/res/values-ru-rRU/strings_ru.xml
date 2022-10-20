@@ -2,5 +2,7 @@
 <resources>
     <string name="app_name">Инвест кошелек</string>
     <string name="title">Мои валюты</string>
+    <string name="action">Действия</string>
+    <string name="refresh">Обновить</string>
 
 </resources>

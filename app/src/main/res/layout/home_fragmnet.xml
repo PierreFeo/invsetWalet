@@ -27,24 +27,82 @@
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/menuImageButton"
-        app:layout_constraintStart_toEndOf="@id/menuImageButton"
+        android:text="@string/title"
         app:layout_constraintBottom_toBottomOf="@id/menuImageButton"
         app:layout_constraintEnd_toStartOf="@id/sortImageButton"
-        android:text="@string/title"/>
+        app:layout_constraintStart_toEndOf="@id/menuImageButton"
+        app:layout_constraintTop_toTopOf="@id/menuImageButton" />
 
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/sumTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView"
-        app:layout_constraintStart_toStartOf="@id/titleTextView"
-        app:layout_constraintEnd_toEndOf="@id/titleTextView"
-        android:layout_marginTop="@dimen/menu_button_size"
+        android:layout_marginTop="56dp"
+        android:text="153453 Р"
+        android:textColor="@android:color/black"
         android:textSize="@dimen/sum_size"
+        app:layout_constraintEnd_toEndOf="@id/titleTextView"
+        app:layout_constraintStart_toStartOf="@id/titleTextView"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
 
-        android:text="8888"/>
+    <LinearLayout
+        android:id="@+id/linearResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/sumTextView"
+        app:layout_constraintStart_toStartOf="@id/sumTextView"
+        app:layout_constraintTop_toBottomOf="@id/sumTextView">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/resultTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+24000"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="@id/resultPercentTextView" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/resultPercentTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="25%"
+            android:textSize="24dp"
+            />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/linearActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/linearResult"
+        app:layout_constraintStart_toStartOf="@id/linearResult"
+        app:layout_constraintEnd_toEndOf="@id/linearResult"
+
+        >
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/actionImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/action"
+            app:layout_constraintStart_toStartOf="@id/linearResult"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/refreshImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/refresh" />
+
+    </LinearLayout>
+
+
 
 
 

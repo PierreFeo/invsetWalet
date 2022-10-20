@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">invsetWalet</string>
     <string name="title">My Walet</string>
+    <string name="action">Action</string>
+    <string name="refresh">Refresh</string>
+
+
 </resources>
