@@ -5,6 +5,8 @@ HELP.md
 build/
 google-services.json
 
+local.properties
+
 ### STS ###
 .apt_generated
 .classpath
