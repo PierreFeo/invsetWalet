@@ -3,6 +3,8 @@
     <string name="title">My Walet</string>
     <string name="action">Action</string>
     <string name="refresh">Refresh</string>
+    <string name="titleAccount">Title Account</string>
+    <string name="descriptionAccount">Description Account</string>
 
 
 </resources>
