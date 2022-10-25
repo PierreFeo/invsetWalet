@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "ru.iw.invsetwalet"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -29,6 +29,8 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures.viewBinding = true
+    namespace 'ru.iw.invsetwalet'
 }
 
 dependencies {
@@ -37,6 +39,8 @@ dependencies {
     def appcompat_version = "1.4.2"
     def mdc_version = "1.6.1"
     def constraintlayout_version = "2.1.4"
+    def lifecycle_version = "2.6.0-alpha03"
+    def arch_version = "2.1.0"
 
 
 
@@ -48,6 +52,19 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:2.5.2"
 
     implementation "androidx.recyclerview:recyclerview:1.2.1"
+
+
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    // ViewModel utilities for Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    // Lifecycles only (without ViewModel or LiveData)
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
+    // optional - Test helpers for LiveData
+    testImplementation("androidx.arch.core:core-testing:$arch_version")
+
 
 
 
