@@ -5,6 +5,8 @@
     <string name="refresh">Refresh</string>
     <string name="titleAccount">Title Account</string>
     <string name="descriptionAccount">Description Account</string>
+    <string name="remove">Remove</string>
+    <string name="change">Change</string>
 
 
 </resources>

@@ -13,4 +13,7 @@ interface AccountDao {
 
     @Insert
     fun insert(account: AccountEntity)
+
+    @Query("DELETE FROM accounts_table WHERE idAccount = :id")
+    fun removeAccountById(id: Int)
 }

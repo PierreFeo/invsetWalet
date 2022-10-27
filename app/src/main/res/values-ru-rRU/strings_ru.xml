@@ -6,5 +6,7 @@
     <string name="refresh">Обновить</string>
     <string name="titleAccount">Название счета</string>
     <string name="descriptionAccount">Описание счета</string>
+    <string name="remove">Удалить</string>
+    <string name="change">Изменить</string>
 
 </resources>

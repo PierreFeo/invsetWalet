@@ -15,10 +15,16 @@ class AccountViewModel(application: Application) : AndroidViewModel(application)
     private val repository: AccountRepository =
         AccountRepositoryImpl(dao = AppDb.getInstance(context = application).accountDao)
 
+
+    val data = repository.getAll()
+
     override fun onAddClicked() {
-        repository.add(Account(0, "тест", "тестовое поле", "USD"))
-        println("Лох")
+        repository.add(Account(0, "Тестовый счет в евро", "Описание тестового счета", "USD"))
+
     }
 
+    override fun onRemoveClicked(id: Int) {
+        repository.removeAccount(id)
+    }
 
 }

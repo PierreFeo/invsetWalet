@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
+import ru.iw.invsetwalet.adapter.AccountAdapter
 import ru.iw.invsetwalet.databinding.HomeFragmnetBinding
 import ru.iw.invsetwalet.viewModel.AccountViewModel
 
@@ -22,15 +22,16 @@ class HomeFragment : Fragment() {
         val viewModel: AccountViewModel by viewModels(ownerProducer = ::requireParentFragment)
 
         binding.refreshImageView.setOnClickListener { viewModel.onAddClicked() }
-        binding.menuImageButton.setOnClickListener {
-            it.visibility = View.GONE
 
-            binding.menuImageButton.visibility = View.GONE
+        val adapter = AccountAdapter(viewModel)
+
+        binding.recyclerViewAccount.adapter = adapter
+
+        viewModel.data.observe(viewLifecycleOwner){
+            adapter.submitList(it)
         }
 
 
-        println("тест")
-        Log.d("фффф", "ффф")
         return binding.root
     }
 }

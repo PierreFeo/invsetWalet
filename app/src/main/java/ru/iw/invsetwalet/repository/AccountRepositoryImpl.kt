@@ -20,4 +20,8 @@ class AccountRepositoryImpl(
         dao.insert(account.toAccountEntity())
     }
 
+    override fun removeAccount(id: Int) {
+        dao.removeAccountById(id)
+    }
+
 }
