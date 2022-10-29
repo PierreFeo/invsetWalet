@@ -7,6 +7,14 @@
     <string name="descriptionAccount">Description Account</string>
     <string name="remove">Remove</string>
     <string name="change">Change</string>
+    <string name="currency">Currency</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="newAccount">New account</string>
+    <string name="note">Note</string>
+
+
+
 
 
 </resources>
