@@ -16,12 +16,20 @@ class AccountRepositoryImpl(
         list.map { AccountEntity -> AccountEntity.toAccount() }
     }
 
+    override fun saveAccount(account: Account) {
+        dao.insert(account.toAccountEntity())
+    }
+
     override fun add(account: Account) {
         dao.insert(account.toAccountEntity())
     }
 
     override fun removeAccount(id: Int) {
         dao.removeAccountById(id)
+    }
+
+    override fun getAccountFromDataBase(id: Int): Account {
+        return dao.getAccount(id).toAccount()
     }
 
 }

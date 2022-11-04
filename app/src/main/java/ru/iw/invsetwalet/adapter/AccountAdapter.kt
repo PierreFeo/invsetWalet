@@ -54,8 +54,8 @@ class AccountViewHolder(
     fun bind(account: Account) = with(binding) {
         titleAccount.text = account.title
         descriptionAccount.text = account.description
-        sumAccount.text = account.type
-        percentAccount.text = account.type
+        sumAccount.text = account.currency
+        percentAccount.text = account.createDate
 
 
         root.setOnLongClickListener {
@@ -65,6 +65,10 @@ class AccountViewHolder(
                     when (it.itemId) {
                         R.id.removeButtonMenu -> {
                             listener.onRemoveClicked(account.id)
+                            true
+                        }
+                        R.id.changeButtonMenu -> {
+                            listener.onEditClicked(account)
                             true
                         }
                         else -> {

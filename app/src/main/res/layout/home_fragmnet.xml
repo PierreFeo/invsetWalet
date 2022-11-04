@@ -86,6 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:checkable="true"
             android:text="@string/action"
 
             app:layout_constraintStart_toStartOf="@id/linearResult" />
@@ -172,14 +173,88 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewAccount"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
+        android:layout_height="0dp"
         android:layout_marginTop="4dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/grayLineBot"
         tools:layout_editor_absoluteX="1dp"
         tools:listitem="@layout/card_account_fragment" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/grayBackgroundLinearLayout"
+            style="@style/MaterialAlertDialog.Rounded"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:background="@color/my_background_black"
+            />
+
+
+        <LinearLayout
+            android:id="@+id/bottomMenuLinearLayout"
+            style="@style/MaterialAlertDialog.Rounded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/rounded"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/addPayment"
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginStart="@dimen/dp_24"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_22">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/addExpense"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginStart="@dimen/dp_24"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addExpense"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_22">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/transfer"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginStart="@dimen/dp_24"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/transfer"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_22"
+                android:layout_marginBottom="@dimen/dp_16">
+
+            </TextView>
+
+
+        </LinearLayout>
+    </RelativeLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

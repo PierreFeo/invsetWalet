@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">invsetWalet</string>
-    <string name="title">My Walet</string>
+    <string name="app_name">Invest Wallet</string>
+    <string name="title">My Wallet</string>
     <string name="action">Action</string>
     <string name="refresh">Refresh</string>
     <string name="titleAccount">Title Account</string>
@@ -12,6 +12,28 @@
     <string name="cancel">Cancel</string>
     <string name="newAccount">New account</string>
     <string name="note">Note</string>
+    <string name="menu">Menu</string>
+    <string name="descriptionApp">Reliable tool for investment control</string>
+    <string name="addNewAccount">Open</string>
+    <string name="descriptionNewAccount">Open a new account for investments in currency, real estate, cars, etc.</string>
+    <string name="importText">Import</string>
+    <string name="importTextDescription">Restore the device memory database</string>
+    <string name="exportText">Export</string>
+    <string name="exportTextDescription">Save the database to the device memory</string>
+    <string name="typeAccount">Type account</string>
+    <string name="CASH">Cash</string>
+    <string name="BANK_DEPOSIT">Bank deposit</string>
+    <string name="PROPERTY">Property</string>
+    <string name="AUTOMOBILE">Automobile</string>
+    <string name="OTHER">Other</string>
+    <string name="add">Add payment</string>
+    <string name="addExpense">Add expense</string>
+    <string name="transfer">Between accounts</string>
+
+
+    BANK_DEPOSIT
+
+
 
 
 

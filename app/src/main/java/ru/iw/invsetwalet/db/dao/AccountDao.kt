@@ -16,4 +16,8 @@ interface AccountDao {
 
     @Query("DELETE FROM accounts_table WHERE idAccount = :id")
     fun removeAccountById(id: Int)
+
+
+    @Query("SELECT * FROM accounts_table WHERE idAccount = :id")
+    fun getAccount(id: Int): AccountEntity
 }

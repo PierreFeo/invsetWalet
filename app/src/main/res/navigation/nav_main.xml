@@ -7,13 +7,34 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="ru.iw.invsetwalet.ui.HomeFragment"
-        android:label="HomeFragment" >
+        android:label="HomeFragment">
+
+
         <action
-            android:id="@+id/action_homeFragment_to_newAccountFragment"
-            app:destination="@id/newAccountFragment" />
+            android:id="@+id/action_homeFragment_to_menuFragment"
+            app:destination="@id/menuFragment"
+            app:enterAnim="@animator/slide_in_right"
+            app:exitAnim="@animator/slide_out_left"
+            app:popEnterAnim="@animator/slide_in_left"
+            app:popExitAnim="@animator/slide_out_right">
+
+    </action>
     </fragment>
     <fragment
         android:id="@+id/newAccountFragment"
         android:name="ru.iw.invsetwalet.ui.NewAccountFragment"
         android:label="NewAccountFragment" />
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="ru.iw.invsetwalet.ui.MenuFragment"
+        android:label="MenuFragment" >
+        <action
+            android:id="@+id/action_menuFragment_to_newAccountFragment"
+            app:destination="@id/newAccountFragment"
+            app:enterAnim="@animator/slide_in_down"
+            app:exitAnim="@animator/slide_out_up"
+            app:popEnterAnim="@animator/slide_in_up"
+            app:popExitAnim="@animator/slide_out_down"
+            />
+    </fragment>
 </navigation>

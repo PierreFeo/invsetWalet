@@ -27,11 +27,11 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:hint="@string/titleAccount"
+        android:padding="16dp"
         android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
-        android:padding="16dp">
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/accountTitleEditText"
@@ -49,8 +49,8 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:hint="@string/descriptionAccount"
-        android:singleLine="true"
         android:padding="16dp"
+        android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/accountTitleLayout">
@@ -66,18 +66,37 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/currencyAccountEditTextView"
-        android:layout_width="match_parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:hint="@string/currency"
+        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/accountDescriptionLayout">
+
+        <AutoCompleteTextView
+            android:singleLine="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/typeAccountEditTextView"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/typeAccount"
+        android:padding="16dp"
+        app:layout_constraintEnd_toStartOf="@id/currencyAccountEditTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/accountDescriptionLayout">
 
         <AutoCompleteTextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="none" />
+            android:layout_height="match_parent"
+            android:inputType="none"
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -85,16 +104,17 @@
         android:id="@+id/noteLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:ellipsize="end"
         android:hint="@string/note"
+        android:padding="16dp"
         app:layout_constraintTop_toBottomOf="@id/currencyAccountEditTextView">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/noteEditText"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:textCursorDrawable="@null" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/noteEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="100dp"
+            android:textCursorDrawable="@null" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
