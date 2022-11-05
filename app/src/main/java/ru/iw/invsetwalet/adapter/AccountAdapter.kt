@@ -65,6 +65,7 @@ class AccountViewHolder(
                     when (it.itemId) {
                         R.id.removeButtonMenu -> {
                             listener.onRemoveClicked(account.id)
+                                //TODO Confirmation remove
                             true
                         }
                         R.id.changeButtonMenu -> {

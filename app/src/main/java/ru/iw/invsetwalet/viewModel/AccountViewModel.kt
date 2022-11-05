@@ -39,7 +39,15 @@ class AccountViewModel(application: Application) : AndroidViewModel(application)
         note: String,
         date: String,
     ) {
-        repository.saveAccount(Account(0, title, description, type, currency, note, date))
+        val account = currentAccount.value?.copy(
+            title = title,
+            description = description,
+            type = type,
+            currency = currency,
+            note = note
+        ) ?: Account(NEW_ACCOUNT_ID, title, description, type, currency, note, date)
+        repository.saveAccount(account)
+        resetCurrentAccount()
     }
 
     override fun onRemoveClicked(id: Int) {
@@ -48,10 +56,19 @@ class AccountViewModel(application: Application) : AndroidViewModel(application)
 
     override fun onEditClicked(account: Account) {
         editAccountLiveEvent.value = account
+        currentAccount.value = account
     }
 
     override fun getAccountFromDataBase(id: Int): Account {
-       return repository.getAccountFromDataBase(id)
+        return repository.getAccountFromDataBase(id)
+    }
+
+    companion object {
+        const val NEW_ACCOUNT_ID = 0
+    }
+
+    fun resetCurrentAccount() {
+        currentAccount.value = null
     }
 
 }

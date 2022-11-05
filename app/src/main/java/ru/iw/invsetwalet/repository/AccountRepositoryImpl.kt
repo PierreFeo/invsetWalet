@@ -1,6 +1,5 @@
 package ru.iw.invsetwalet.repository
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import ru.iw.invsetwalet.data.Account
 import ru.iw.invsetwalet.db.dao.AccountDao
@@ -17,11 +16,19 @@ class AccountRepositoryImpl(
     }
 
     override fun saveAccount(account: Account) {
-        dao.insert(account.toAccountEntity())
+        if (account.id == 0) dao.insertAccount(account.toAccountEntity())
+        else dao.updateAccount(
+            account.id,
+            account.title,
+            account.description,
+            account.type,
+            account.currency,
+            account.note
+        )
     }
 
     override fun add(account: Account) {
-        dao.insert(account.toAccountEntity())
+        dao.insertAccount(account.toAccountEntity())
     }
 
     override fun removeAccount(id: Int) {

@@ -36,7 +36,7 @@ class NewAccountFragment : Fragment() {
 
         arguments?.let {
             val editedAccount = viewModel.getAccountFromDataBase(
-                bundle.getInt(
+                it.getInt(
                     ACCOUNT_ID
                 )
             )
@@ -50,8 +50,10 @@ class NewAccountFragment : Fragment() {
         }
         with(binding) {
             toolbarUp.setNavigationIcon(R.drawable.ic_rrow_back_24dp)
-            toolbarUp.setNavigationOnClickListener { findNavController().navigateUp() }
-//TODO i will use global toolbar
+            toolbarUp.setNavigationOnClickListener {
+                findNavController().navigateUp()
+                viewModel.resetCurrentAccount()}
+             //TODO i will use global toolbar
         }
 
 
