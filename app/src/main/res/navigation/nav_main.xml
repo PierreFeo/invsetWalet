@@ -19,6 +19,9 @@
             app:popExitAnim="@animator/slide_out_right">
 
     </action>
+        <action
+            android:id="@+id/action_homeFragment_to_paymentsFragment"
+            app:destination="@id/paymentsFragment" />
     </fragment>
     <fragment
         android:id="@+id/newAccountFragment"
@@ -37,4 +40,12 @@
             app:popExitAnim="@animator/slide_out_down"
             />
     </fragment>
+    <fragment
+        android:id="@+id/paymentsFragment"
+        android:name="ru.iw.invsetwalet.ui.PaymentsFragment"
+        android:label="PaymentsFragment" />
+    <fragment
+        android:id="@+id/choiceFragment"
+        android:name="ru.iw.invsetwalet.ui.ChoiceFragment"
+        android:label="ChoiceFragment" />
 </navigation>

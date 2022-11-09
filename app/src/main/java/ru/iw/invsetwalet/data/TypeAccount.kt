@@ -11,7 +11,7 @@ enum class TypeAccount {
     OTHER;
 
     fun getText(context: Context) = when (this) {
-        CASH -> context.getString(R.string.CASH)
+        CASH -> context.getString(R.string.currency)
         BANK_DEPOSIT -> context.getString(R.string.BANK_DEPOSIT)
         PROPERTY -> context.getString(R.string.PROPERTY)
         AUTOMOBILE -> context.getString(R.string.AUTOMOBILE)

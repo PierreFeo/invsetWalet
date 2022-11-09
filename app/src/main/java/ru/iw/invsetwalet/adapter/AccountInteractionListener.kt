@@ -1,5 +1,6 @@
 package ru.iw.invsetwalet.adapter
 
+
 import ru.iw.invsetwalet.data.Account
 
 interface AccountInteractionListener {
@@ -15,5 +16,7 @@ interface AccountInteractionListener {
     fun onAddClicked()
     fun onRemoveClicked(id: Int)
     fun onEditClicked(account: Account)
-    fun getAccountFromDataBase(id: Int):Account
+    fun getAccountFromDataBase(id: Int): Account
+    fun onAddPaymentClicked(boolean: Boolean)
+    fun onAccountClicked(account: Account)
 }

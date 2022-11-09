@@ -19,11 +19,8 @@ class MenuFragment : Fragment() {
 
 
         val binding = MenuFragmentBinding.inflate(inflater, container, false)
-        binding.cardViewOpenAccount.setOnClickListener { findNavController().navigate(R.id.action_menuFragment_to_newAccountFragment) }
-        with(binding) {
-            toolbarUp.setNavigationIcon(R.drawable.ic_rrow_back_24dp)
-            toolbarUp.setNavigationOnClickListener { findNavController().navigateUp() }
-        }
+        binding.cardViewOpenAccount.setOnClickListener {
+            findNavController().navigate(R.id.action_menuFragment_to_newAccountFragment) }
 
         return binding.root
     }

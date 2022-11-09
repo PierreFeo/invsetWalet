@@ -1,6 +1,7 @@
 package ru.iw.invsetwalet.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
@@ -8,21 +9,22 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.iw.invsetwalet.R
 import ru.iw.invsetwalet.data.Account
+import ru.iw.invsetwalet.data.TypeAccount
 
 import ru.iw.invsetwalet.databinding.CardAccountFragmentBinding
 
-internal class AccountAdapter(
+internal class ChoiceAdapter(
     private val listener: AccountInteractionListener
-) : ListAdapter<Account, AccountViewHolder>(DiffCallBack) {
+) : ListAdapter<Account, ChoiceViewHolder>(DiffCallBack) {
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChoiceViewHolder {
         val view =
             CardAccountFragmentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return AccountViewHolder(listener, view)
+        return ChoiceViewHolder(listener, view)
     }
 
-    override fun onBindViewHolder(holder: AccountViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ChoiceViewHolder, position: Int) {
         holder.bind(getItem(position))
 
 
@@ -48,44 +50,20 @@ internal class AccountAdapter(
 }
 
 
-class AccountViewHolder(
+class ChoiceViewHolder(
     private val listener: AccountInteractionListener,
     private val binding: CardAccountFragmentBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
 
     fun bind(account: Account) = with(binding) {
-
         titleAccount.text = account.title
         descriptionAccount.text = account.description
-        sumAccount.text = "123"
-        percentAccount.text = "ss"
-
-
-
-        root.setOnLongClickListener {
-            PopupMenu(it.context, it).apply {
-                inflate(R.menu.popup)
-                setOnMenuItemClickListener {
-                    when (it.itemId) {
-                        R.id.removeButtonMenu -> {
-                            listener.onRemoveClicked(account.id)
-                            //TODO Confirmation remove
-                            true
-                        }
-                        R.id.changeButtonMenu -> {
-                            listener.onEditClicked(account)
-                            true
-                        }
-                        else -> {
-                            false
-                        }
-                    }
-                }
-            }.show()
-            true
+        sumAccount.visibility = View.GONE
+        percentAccount.visibility = View.GONE
+        root.setOnClickListener {
+            listener.onAccountClicked(account)
         }
-
     }
 }
 

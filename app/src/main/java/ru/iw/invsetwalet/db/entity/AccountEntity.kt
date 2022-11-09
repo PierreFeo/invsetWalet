@@ -4,25 +4,24 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.iw.invsetwalet.data.Account
-import java.util.Currency
 
 
 @Entity(tableName = "accounts_table")
 data class AccountEntity(
-    @ColumnInfo(name = "idAccount")
+    @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    @ColumnInfo(name = "titleAccount")
+    @ColumnInfo(name = "title")
     val title: String,
-    @ColumnInfo(name = "descriptionAccount")
+    @ColumnInfo(name = "description")
     val description: String,
-    @ColumnInfo(name = "typeAccount")
+    @ColumnInfo(name = "type")
     val type: String,
-    @ColumnInfo(name = "currencyAccount")
+    @ColumnInfo(name = "currency")
     val currency: String,
-    @ColumnInfo(name = "noteAccount")
+    @ColumnInfo(name = "note")
     val note: String,
-    @ColumnInfo(name = "createDateAccount")
+    @ColumnInfo(name = "createDate")
     val createDate: String
 )
 
@@ -43,5 +42,5 @@ fun Account.toAccountEntity() = AccountEntity(
     type = type,
     currency = currency,
     note = note,
-    createDate = createDate,
+    createDate = createDate
 )

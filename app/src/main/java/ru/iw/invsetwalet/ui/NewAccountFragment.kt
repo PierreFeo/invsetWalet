@@ -1,13 +1,14 @@
 package ru.iw.invsetwalet.ui
 
 import android.os.Bundle
-import android.provider.ContactsContract.Data
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.activity.OnBackPressedCallback
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,14 +16,12 @@ import ru.iw.invsetwalet.R
 import ru.iw.invsetwalet.data.TypeAccount
 import ru.iw.invsetwalet.databinding.NewAccountFragmentBinding
 import ru.iw.invsetwalet.util.ACCOUNT_ID
-import ru.iw.invsetwalet.util.bundle
 import ru.iw.invsetwalet.viewModel.AccountViewModel
-import java.text.DateFormat.getDateInstance
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 
 class NewAccountFragment : Fragment() {
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +29,7 @@ class NewAccountFragment : Fragment() {
         savedInstanceState: Bundle?
 
     ): View {
+
         val viewModel: AccountViewModel by viewModels(ownerProducer = ::requireParentFragment)
         val binding = NewAccountFragmentBinding.inflate(inflater, container, false)
 
@@ -47,13 +47,6 @@ class NewAccountFragment : Fragment() {
                 currencyAccountEditTextView.editText?.setText(editedAccount.currency)
                 noteEditText.setText(editedAccount.note)
             }
-        }
-        with(binding) {
-            toolbarUp.setNavigationIcon(R.drawable.ic_rrow_back_24dp)
-            toolbarUp.setNavigationOnClickListener {
-                findNavController().navigateUp()
-                viewModel.resetCurrentAccount()}
-             //TODO i will use global toolbar
         }
 
 
@@ -98,6 +91,8 @@ class NewAccountFragment : Fragment() {
         const val EUR_TYPE = "EUR"
         const val CHY_TYPE = "CNY"
     }
+
+
 }
 
 

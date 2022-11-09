@@ -1,31 +1,37 @@
 package ru.iw.invsetwalet.viewModel
 
+
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import ru.iw.invsetwalet.adapter.AccountInteractionListener
 import ru.iw.invsetwalet.data.Account
-import ru.iw.invsetwalet.db.AppDb
-import ru.iw.invsetwalet.repository.AccountRepository
-import ru.iw.invsetwalet.repository.AccountRepositoryImpl
+import ru.iw.invsetwalet.repository.RoomRepository
+import ru.iw.invsetwalet.repository.RoomRepositoryImpl
 import ru.iw.invsetwalet.util.SingleLiveEvent
 
 class AccountViewModel(application: Application) : AndroidViewModel(application),
     AccountInteractionListener {
 
-    private val repository: AccountRepository =
-        AccountRepositoryImpl(dao = AppDb.getInstance(context = application).accountDao)
+    //    private val repository: RoomRepository =
+//        RoomRepositoryImpl(dao = AppDb.getInstance(context = application).accountDao)
+//
+    private val repository: RoomRepository = RoomRepositoryImpl(application)
+
 
     val currentAccount = MutableLiveData<Account?>(null)
-    val editAccountLiveEvent = SingleLiveEvent<Account>()
     val data = repository.getAll()
+
+
+    val editAccountLiveEvent = SingleLiveEvent<Account>()
+    val navigateAddPaymentSingleLiveEvent = SingleLiveEvent<Boolean>()
+    val choiceAccountLiveEvent = SingleLiveEvent<Account>()
 
     override fun onAddClicked() {
         repository.add(
             Account(
                 0, "Тестовый счет в евро", "Описание тестового счета", "CASH", "USD", "s",
-                "00/00/00"
+                System.currentTimeMillis().toString()
             )
         )
 
@@ -61,6 +67,14 @@ class AccountViewModel(application: Application) : AndroidViewModel(application)
 
     override fun getAccountFromDataBase(id: Int): Account {
         return repository.getAccountFromDataBase(id)
+    }
+
+    override fun onAddPaymentClicked(boolean: Boolean) {
+        navigateAddPaymentSingleLiveEvent.value = boolean
+    }
+
+    override fun onAccountClicked(account: Account) {
+        choiceAccountLiveEvent.value = account
     }
 
     companion object {

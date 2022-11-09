@@ -21,7 +21,7 @@
     <string name="exportText">Export</string>
     <string name="exportTextDescription">Save the database to the device memory</string>
     <string name="typeAccount">Type account</string>
-    <string name="CASH">Cash</string>
+
     <string name="BANK_DEPOSIT">Bank deposit</string>
     <string name="PROPERTY">Property</string>
     <string name="AUTOMOBILE">Automobile</string>
@@ -29,6 +29,9 @@
     <string name="add">Add payment</string>
     <string name="addExpense">Add expense</string>
     <string name="transfer">Between accounts</string>
+    <string name="ChooseAccount">Choose an account</string>
+    <string name="AmountPayment">Amount of payment</string>
+    <string name="exchangeRates">Exchange Rates</string>
 
 
     BANK_DEPOSIT

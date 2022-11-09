@@ -5,11 +5,20 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import ru.iw.invsetwalet.db.dao.AccountDao
+import ru.iw.invsetwalet.db.dao.TransactionsDao
 import ru.iw.invsetwalet.db.entity.AccountEntity
+import ru.iw.invsetwalet.db.entity.TransactionsEntity
 
-@Database(entities = [AccountEntity::class], version = 1)
+@Database(
+    version = 1,
+    entities = [
+        AccountEntity::class,
+        TransactionsEntity::class
+    ]
+)
 abstract class AppDb : RoomDatabase() {
     abstract val accountDao: AccountDao
+    abstract val transactionDao: TransactionsDao
 
     companion object {
         @Volatile

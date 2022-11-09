@@ -87,8 +87,11 @@ class HomeFragment : Fragment() {
         viewModel.editAccountLiveEvent.observe(viewLifecycleOwner) {
             bundle.putInt(ACCOUNT_ID, it.id)
             findNavController().navigate(R.id.newAccountFragment, bundle)
-
         }
+        binding.addPayment.setOnClickListener {
+            findNavController().navigate(R.id.paymentsFragment,)
+        }
+
 
         return binding.root
     }

@@ -8,7 +8,7 @@
     <string name="descriptionAccount">Описание счета</string>
     <string name="remove">Удалить</string>
     <string name="change">Изменить</string>
-    <string name="currency">Валюта</string>
+
     <string name="save">Сохранить</string>
     <string name="cancel">Отмена</string>
     <string name="newAccount">Новый счет</string>
@@ -22,7 +22,7 @@
     <string name="exportText">Экспорт</string>
     <string name="exportTextDescription">Сохраните базу данных в памяти устройства</string>
     <string name="typeAccount">Тип счета</string>
-    <string name="CASH">Наличные</string>
+    <string name="currency">Наличные</string>
     <string name="BANK_DEPOSIT">Банковский вклад</string>
     <string name="PROPERTY">Недвижимость</string>
     <string name="AUTOMOBILE">Автомобиль</string>
@@ -30,5 +30,9 @@
     <string name="add">Пополнить</string>
     <string name="addExpense">Списать</string>
     <string name="transfer">Между счетами</string>
+    <string name="ChooseAccount">Выберите счет</string>
+    <string name="AmountPayment">Сумма пополнения</string>
+    <string name="exchangeRates">Курс приобретения валюты</string>
+
 
 </resources>
