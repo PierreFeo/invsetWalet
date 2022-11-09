@@ -1,6 +1,7 @@
 package ru.iw.invsetwalet.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.iw.invsetwalet.R
+import ru.iw.invsetwalet.adapter.ChoiceAdapter
 import ru.iw.invsetwalet.data.TypeAccount
 import ru.iw.invsetwalet.databinding.PaymentsFragmentBinding
 import ru.iw.invsetwalet.util.ACCOUNT_ID
@@ -24,29 +26,36 @@ class PaymentsFragment : Fragment() {
         val viewModel: AccountViewModel by viewModels(ownerProducer = ::requireParentFragment)
 
 
-        arguments?.let {
-            val choiceAccount = viewModel.getAccountFromDataBase(it.getInt(ACCOUNT_ID))
-            with(binding) {
-                chooseAccountButton.text = choiceAccount.title
-                if (choiceAccount.type != TypeAccount.CASH.toString()) exchangeRatesTextInput.visibility =
-                    View.GONE
-            }
 
-
+        val choiceAdapter = ChoiceAdapter(viewModel)
+        binding.recyclerChoice.adapter = choiceAdapter
+        viewModel.data.observe(viewLifecycleOwner) {
+            choiceAdapter.submitList(it)
         }
 
 
         binding.chooseAccountButton.setOnClickListener {
-            findNavController().navigate(R.id.choiceFragment)
+            with(binding) {
+                choiceEditText.visibility = View.GONE
+                constraintWithRecycler.visibility = View.VISIBLE
+            }
 
         }
 
+        viewModel.choiceAccountLiveEvent.observe(viewLifecycleOwner) { account ->
+            with(binding) {
+                chooseAccountButton.text = account.title
+                choiceEditText.visibility = View.VISIBLE
+                constraintWithRecycler.visibility = View.GONE
+            }
+
+
+            binding.saveAccountButton.setOnClickListener {
+                //TODO insert room dataBase
+                Log.d("saveButton", account.title)
+            }
+        }
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val menuHost: MenuHost = requireActivity()
-
-
-    }
 }
