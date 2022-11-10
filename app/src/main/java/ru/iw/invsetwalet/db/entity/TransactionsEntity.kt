@@ -23,21 +23,21 @@ data class TransactionsEntity(
     val id: Int,
     @ColumnInfo(name = "account_id")
     val accountId: Int,
-    @ColumnInfo(name = "type")
-    val type: String,
-    @ColumnInfo(name = "sum")
-    val sum: Int,
+    @ColumnInfo(name = "type_transaction")
+    val typeTransact: String,
+    @ColumnInfo(name = " amount_transaction")
+    val amountTransact: Double,
     @ColumnInfo(name = "rates_buy")
     val ratesBuy: Double,
-    @ColumnInfo(name = "sum_rub")
-    val createDate: Double
+    @ColumnInfo(name = "create_rub")
+    val createDate: String
 )
 
 fun TransactionsEntity.toTransactions() = Transactions(
     id = id,
     accountId = accountId,
-    type = type,
-    sum = sum,
+    typeTransact = typeTransact,
+    amountTransact = amountTransact,
     ratesBuy = ratesBuy,
     createDate = createDate
 )
@@ -45,8 +45,8 @@ fun TransactionsEntity.toTransactions() = Transactions(
 fun Transactions.toTransactionsEntity() = TransactionsEntity(
     id = id,
     accountId = accountId,
-      type = type,
-    sum = sum,
+    typeTransact = typeTransact,
+    amountTransact = amountTransact,
     ratesBuy = ratesBuy,
     createDate = createDate
 )

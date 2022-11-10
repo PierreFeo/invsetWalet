@@ -9,5 +9,8 @@ data class Account(
     val type: String,
     val currency: String,
     val note: String,
-    val createDate: String
+    val total: Double,
+    val totalInRub: Double,
+    val createDate: String,
+    val isRemoved: Boolean
 )

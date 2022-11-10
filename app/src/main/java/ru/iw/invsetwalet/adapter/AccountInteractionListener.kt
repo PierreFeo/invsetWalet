@@ -2,6 +2,7 @@ package ru.iw.invsetwalet.adapter
 
 
 import ru.iw.invsetwalet.data.Account
+import ru.iw.invsetwalet.data.Transactions
 
 interface AccountInteractionListener {
     fun onSaveClicked(
@@ -19,4 +20,11 @@ interface AccountInteractionListener {
     fun getAccountFromDataBase(id: Int): Account
     fun onAddPaymentClicked(boolean: Boolean)
     fun onAccountClicked(account: Account)
+    fun onSaveTransaction(
+        accountId: Int,
+        amountTransact: Double,
+        typeTransact: String,
+        ratesBuy: Double,
+        createDate: String
+    )
 }

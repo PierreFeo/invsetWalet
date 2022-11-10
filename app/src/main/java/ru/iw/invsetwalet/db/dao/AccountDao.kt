@@ -26,6 +26,17 @@ interface AccountDao {
         note: String,
     )
 
+
+//    @Query("UPDATE accounts_table SET total=(SELECT SUM(total) FROM currency_transactions_table)")
+//    fun getTotalSumsFromTransaction()
+//    //TODO i stopped here
+
+    @Transaction
+    @Query("UPDATE accounts_table SET total=(SELECT SUM(` amount_transaction`) FROM currency_transactions_table) WHERE id in(:id)")
+    fun updateTotalSums(id: Int)
+    //TODO im here
+
+
     @Query("DELETE FROM accounts_table WHERE id = :id")
     fun removeAccountById(id: Int)
 

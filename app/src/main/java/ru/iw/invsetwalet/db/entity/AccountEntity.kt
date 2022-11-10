@@ -21,8 +21,14 @@ data class AccountEntity(
     val currency: String,
     @ColumnInfo(name = "note")
     val note: String,
+    @ColumnInfo(name = "total")
+    val total: Double,
+    @ColumnInfo(name = "total_rub")
+    val totalInRub: Double,
     @ColumnInfo(name = "createDate")
-    val createDate: String
+    val createDate: String,
+    @ColumnInfo(name = "is_removed")
+    val isRemoved: Boolean
 )
 
 fun AccountEntity.toAccount() = Account(
@@ -32,7 +38,10 @@ fun AccountEntity.toAccount() = Account(
     type = type,
     currency = currency,
     note = note,
+    total = total,
+    totalInRub = totalInRub,
     createDate = createDate,
+    isRemoved = isRemoved
 )
 
 fun Account.toAccountEntity() = AccountEntity(
@@ -42,5 +51,8 @@ fun Account.toAccountEntity() = AccountEntity(
     type = type,
     currency = currency,
     note = note,
-    createDate = createDate
+    total = total,
+    totalInRub = totalInRub,
+    createDate = createDate,
+    isRemoved = isRemoved
 )

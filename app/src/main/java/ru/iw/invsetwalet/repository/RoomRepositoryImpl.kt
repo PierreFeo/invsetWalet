@@ -4,6 +4,7 @@ package ru.iw.invsetwalet.repository
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.map
+import androidx.room.Transaction
 import ru.iw.invsetwalet.data.Account
 import ru.iw.invsetwalet.data.AccountWithTransaction
 import ru.iw.invsetwalet.data.Transactions
@@ -26,44 +27,37 @@ class RoomRepositoryImpl(
         list.map { AccountEntity -> AccountEntity.toAccount() }
     }
 
-            override fun saveAccount(account: Account) {
-                if (account.id == 0) dao.insertAccount(account.toAccountEntity())
-                else dao.updateAccount(
-                    account.id,
-                    account.title,
-                    account.description,
-                    account.type,
-                    account.currency,
-                    account.note
-                )
-            }
+    override fun saveAccount(account: Account) {
+        if (account.id == 0) dao.insertAccount(account.toAccountEntity())
+        else dao.updateAccount(
+            account.id,
+            account.title,
+            account.description,
+            account.type,
+            account.currency,
+            account.note
+        )
+    }
 
-            override fun add(account: Account) {
-                dao.insertAccount(account.toAccountEntity())
-                val sum = 10
-                val rate = 85.0
-                val itog = sum * rate
-                transactionsDao.addTransaction(
-                    Transactions(
-                        0,
-                        2,
-                        sum,
-                        "Пополение",
-                        rate,
-                        itog
-                    ).toTransactionsEntity()
-                )
-            }
+    override fun add(account: Account) {
+        dao.insertAccount(account.toAccountEntity())
+    }
 
-            override fun removeAccount(id: Int) {
+    override fun removeAccount(id: Int) {
 
 
-                dao.removeAccountById(id)
-            }
+        dao.removeAccountById(id)
+    }
 
-            override fun getAccountFromDataBase(id: Int): Account {
-                return dao.getAccount(id).toAccount()
-            }
+    override fun getAccountFromDataBase(id: Int): Account {
+        return dao.getAccount(id).toAccount()
+    }
+
+    override fun saveTransaction(transactions: Transactions) {
+        transactionsDao.addTransaction(transactions.toTransactionsEntity())
+        dao.updateTotalSums(transactions.accountId)
+
+    }
 
 
-        }
+}

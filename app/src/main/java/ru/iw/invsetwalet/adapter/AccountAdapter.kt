@@ -10,6 +10,7 @@ import ru.iw.invsetwalet.R
 import ru.iw.invsetwalet.data.Account
 
 import ru.iw.invsetwalet.databinding.CardAccountFragmentBinding
+import kotlin.math.roundToInt
 
 internal class AccountAdapter(
     private val listener: AccountInteractionListener
@@ -58,7 +59,7 @@ class AccountViewHolder(
 
         titleAccount.text = account.title
         descriptionAccount.text = account.description
-        sumAccount.text = "123"
+        sumAccount.text = account.total.roundToInt().toString()
         percentAccount.text = "ss"
 
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import ru.iw.invsetwalet.adapter.AccountInteractionListener
 import ru.iw.invsetwalet.data.Account
+import ru.iw.invsetwalet.data.Transactions
 import ru.iw.invsetwalet.repository.RoomRepository
 import ru.iw.invsetwalet.repository.RoomRepositoryImpl
 import ru.iw.invsetwalet.util.SingleLiveEvent
@@ -13,12 +14,32 @@ import ru.iw.invsetwalet.util.SingleLiveEvent
 class AccountViewModel(application: Application) : AndroidViewModel(application),
     AccountInteractionListener {
 
+    val newAccount = Account(
+        NEW_ID,
+        "",
+        "",
+        "",
+        "",
+        "",
+        0.0,
+        0.0,
+        "",
+        false
+    )
+
+    val newTransaction = Transactions(
+        NEW_ID,
+        0,
+        0.0,
+        "",
+        0.0,
+        ""
+    )
+
     //    private val repository: RoomRepository =
 //        RoomRepositoryImpl(dao = AppDb.getInstance(context = application).accountDao)
 //
     private val repository: RoomRepository = RoomRepositoryImpl(application)
-
-
     val currentAccount = MutableLiveData<Account?>(null)
     val data = repository.getAll()
 
@@ -28,12 +49,12 @@ class AccountViewModel(application: Application) : AndroidViewModel(application)
     val choiceAccountLiveEvent = SingleLiveEvent<Account>()
 
     override fun onAddClicked() {
-        repository.add(
-            Account(
-                0, "Тестовый счет в евро", "Описание тестового счета", "CASH", "USD", "s",
-                System.currentTimeMillis().toString()
-            )
-        )
+//        repository.add(
+//            Account(
+//                0, "Тестовый счет в евро", "Описание тестового счета", "CASH", "USD", "s",
+//                System.currentTimeMillis().toDouble()
+//            )
+//        )
 
     }
 
@@ -51,7 +72,14 @@ class AccountViewModel(application: Application) : AndroidViewModel(application)
             type = type,
             currency = currency,
             note = note
-        ) ?: Account(NEW_ACCOUNT_ID, title, description, type, currency, note, date)
+        ) ?: newAccount.copy(
+            title = title,
+            description = description,
+            type = type,
+            currency = currency,
+            note = note,
+            createDate = date
+        )
         repository.saveAccount(account)
         resetCurrentAccount()
     }
@@ -77,8 +105,26 @@ class AccountViewModel(application: Application) : AndroidViewModel(application)
         choiceAccountLiveEvent.value = account
     }
 
+    override fun onSaveTransaction(
+        accountId: Int,
+        amountTransact: Double,
+        typeTransact: String,
+        ratesBuy: Double,
+        createDate: String
+    ) {
+        repository.saveTransaction(
+            newTransaction.copy(
+                accountId = accountId,
+                amountTransact = amountTransact,
+                typeTransact = typeTransact,
+                ratesBuy = ratesBuy,
+                createDate = createDate
+            )
+        )
+    }
+
     companion object {
-        const val NEW_ACCOUNT_ID = 0
+        const val NEW_ID = 0
     }
 
     fun resetCurrentAccount() {

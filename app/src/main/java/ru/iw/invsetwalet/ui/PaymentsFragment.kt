@@ -1,6 +1,7 @@
 package ru.iw.invsetwalet.ui
 
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,8 @@ import ru.iw.invsetwalet.data.TypeAccount
 import ru.iw.invsetwalet.databinding.PaymentsFragmentBinding
 import ru.iw.invsetwalet.util.ACCOUNT_ID
 import ru.iw.invsetwalet.viewModel.AccountViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PaymentsFragment : Fragment() {
     override fun onCreateView(
@@ -24,7 +27,6 @@ class PaymentsFragment : Fragment() {
     ): View {
         val binding = PaymentsFragmentBinding.inflate(inflater, container, false)
         val viewModel: AccountViewModel by viewModels(ownerProducer = ::requireParentFragment)
-
 
 
         val choiceAdapter = ChoiceAdapter(viewModel)
@@ -51,11 +53,26 @@ class PaymentsFragment : Fragment() {
 
 
             binding.saveAccountButton.setOnClickListener {
-                //TODO insert room dataBase
-                Log.d("saveButton", account.title)
+                with(binding) {
+                    val amountTransact = paymentSumTextInput.editText?.text.toDouble()
+                    val type = PAYMENT
+                    val rate = exchangeRatesTextInput.editText?.text.toDouble()
+                    val date = SimpleDateFormat("dd/M/yyyy", Locale.US).format(Date())
+                    viewModel.onSaveTransaction(account.id, amountTransact, type, rate, date)
+                    findNavController().navigateUp()
+                    Log.d("saveButton", account.title)
+                }
+
             }
         }
         return binding.root
     }
+
+    companion object {
+        const val PAYMENT = "addPayment"
+    }
+
+    private fun Editable?.toDouble() = (toString().toDouble())
+
 
 }
