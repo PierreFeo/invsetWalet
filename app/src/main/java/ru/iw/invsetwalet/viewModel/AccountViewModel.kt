@@ -125,10 +125,12 @@ class AccountViewModel(application: Application) : AndroidViewModel(application)
 
     companion object {
         const val NEW_ID = 0
+
     }
 
     fun resetCurrentAccount() {
         currentAccount.value = null
     }
+
 
 }

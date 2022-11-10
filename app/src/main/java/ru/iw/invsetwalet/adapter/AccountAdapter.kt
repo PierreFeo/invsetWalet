@@ -3,13 +3,16 @@ package ru.iw.invsetwalet.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.iw.invsetwalet.R
 import ru.iw.invsetwalet.data.Account
-
+import ru.iw.invsetwalet.data.TypeAccount
 import ru.iw.invsetwalet.databinding.CardAccountFragmentBinding
+import ru.iw.invsetwalet.ui.NewAccountFragment
+import ru.iw.invsetwalet.viewModel.AccountViewModel
 import kotlin.math.roundToInt
 
 internal class AccountAdapter(
@@ -59,8 +62,8 @@ class AccountViewHolder(
 
         titleAccount.text = account.title
         descriptionAccount.text = account.description
-        sumAccount.text = account.total.roundToInt().toString()
-        percentAccount.text = "ss"
+        sumAccount.text = formatDisplayCurrencyAccount(account)
+        percentAccount.text = "в разработке"
 
 
 
@@ -87,6 +90,35 @@ class AccountViewHolder(
             true
         }
 
+    }
+
+    private fun formatDisplayCurrencyAccount(account: Account): String {
+        return when (account.currency) {
+            NewAccountFragment.USD_TYPE -> {
+                "${account.total.roundToInt()} $"
+            }
+            NewAccountFragment.RUB_TYPE -> {
+                "${account.total.roundToInt()} ₽"
+            }
+            NewAccountFragment.CHY_TYPE -> {
+                "${account.total.roundToInt()} ¥"
+            }
+            NewAccountFragment.EUR_TYPE -> {
+                "${account.total.roundToInt()} €"
+            }
+            else -> {
+                "${account.total} "
+            }
+        }
+    }
+//
+//    private fun formatDisplayPercent(account: Account): String {
+//       return TEMPORARY_CURRENT_RATE * account.total.toString()
+//        //TODO im here
+//    }
+
+    companion object {
+        const val TEMPORARY_CURRENT_RATE = 61
     }
 }
 

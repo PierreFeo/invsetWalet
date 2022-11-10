@@ -22,7 +22,7 @@
     <string name="exportText">Экспорт</string>
     <string name="exportTextDescription">Сохраните базу данных в памяти устройства</string>
     <string name="typeAccount">Тип счета</string>
-    <string name="currency">Наличные</string>
+    <string name="currency">Валюта</string>
     <string name="BANK_DEPOSIT">Банковский вклад</string>
     <string name="PROPERTY">Недвижимость</string>
     <string name="AUTOMOBILE">Автомобиль</string>
