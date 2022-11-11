@@ -1,9 +1,10 @@
 package ru.iw.invsetwalet.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.core.content.ContentProviderCompat.requireContext
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +13,6 @@ import ru.iw.invsetwalet.data.Account
 import ru.iw.invsetwalet.data.TypeAccount
 import ru.iw.invsetwalet.databinding.CardAccountFragmentBinding
 import ru.iw.invsetwalet.ui.NewAccountFragment
-import ru.iw.invsetwalet.viewModel.AccountViewModel
 import kotlin.math.roundToInt
 
 internal class AccountAdapter(
@@ -57,14 +57,11 @@ class AccountViewHolder(
     private val binding: CardAccountFragmentBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-
     fun bind(account: Account) = with(binding) {
-
         titleAccount.text = account.title
         descriptionAccount.text = account.description
-        sumAccount.text = formatDisplayCurrencyAccount(account)
-        percentAccount.text = "в разработке"
-
+        sumAccount.formatDisplaySymbolCurrency(account)
+        percentAccount.formatDisplayResultPercent(account)
 
 
         root.setOnLongClickListener {
@@ -89,36 +86,38 @@ class AccountViewHolder(
             }.show()
             true
         }
-
     }
 
-    private fun formatDisplayCurrencyAccount(account: Account): String {
-        return when (account.currency) {
-            NewAccountFragment.USD_TYPE -> {
-                "${account.total.roundToInt()} $"
-            }
-            NewAccountFragment.RUB_TYPE -> {
-                "${account.total.roundToInt()} ₽"
-            }
-            NewAccountFragment.CHY_TYPE -> {
-                "${account.total.roundToInt()} ¥"
-            }
-            NewAccountFragment.EUR_TYPE -> {
-                "${account.total.roundToInt()} €"
-            }
-            else -> {
-                "${account.total} "
-            }
+    private fun TextView.formatDisplaySymbolCurrency(account: Account) {
+        text = when (account.currency) {
+            NewAccountFragment.USD_TYPE -> "${roundDouble(account.total)} $"
+            NewAccountFragment.RUB_TYPE -> "${roundDouble(account.total)} ₽"
+            NewAccountFragment.CHY_TYPE -> "${roundDouble(account.total)} ¥"
+            NewAccountFragment.EUR_TYPE -> "${roundDouble(account.total)} €"
+            else -> "${roundDouble(account.total)} "
         }
     }
-//
-//    private fun formatDisplayPercent(account: Account): String {
-//       return TEMPORARY_CURRENT_RATE * account.total.toString()
-//        //TODO im here
-//    }
+
+    private fun TextView.formatDisplayResultPercent(account: Account) {
+        text = if (TypeAccount.CURRENCY.getText(context) == account.type) {
+            Log.d("enum",TypeAccount.CURRENCY.getText(context))
+            "Валюта"
+        } else {
+            Log.d("enum2",TypeAccount.CURRENCY.getText(context))
+            "Не валюта"
+        }
+    }
+
+    private fun roundDouble(double: Double): Double {
+        return (double * 100).roundToInt() / 100.0
+    }
+
+
+
+
 
     companion object {
-        const val TEMPORARY_CURRENT_RATE = 61
+        const val TEMPORARY_CURRENT_RATE = 61.28
     }
 }
 
