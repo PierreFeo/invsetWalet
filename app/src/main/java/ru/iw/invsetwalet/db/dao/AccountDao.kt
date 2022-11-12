@@ -32,7 +32,7 @@ interface AccountDao {
 //    //TODO i stopped here
 
     @Transaction
-    @Query("UPDATE accounts_table SET total=(SELECT SUM(` amount_transaction`) FROM currency_transactions_table WHERE account_id=:id) WHERE id in(:id)")
+    @Query("UPDATE accounts_table SET total=(SELECT SUM(` amount_transaction`) FROM currency_transactions_table WHERE account_id=:id), total_rub=(SELECT SUM(amount_in_rub)FROM currency_transactions_table WHERE account_id=:id) WHERE id in(:id)")
     fun updateTotalSums(id: Int)
     //TODO im here
 

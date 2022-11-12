@@ -6,5 +6,6 @@ data class Transactions(
     val amountTransact: Double,
     val typeTransact: String,
     val ratesBuy: Double,
+    val amountRub: Double,
     val createDate: String
 )

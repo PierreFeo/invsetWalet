@@ -25,6 +25,7 @@ interface AccountInteractionListener {
         amountTransact: Double,
         typeTransact: String,
         ratesBuy: Double,
+        amountRub:Double,
         createDate: String
     )
 }

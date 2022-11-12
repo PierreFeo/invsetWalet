@@ -57,8 +57,9 @@ class PaymentsFragment : Fragment() {
                     val amountTransact = paymentSumTextInput.editText?.text.toDouble()
                     val type = PAYMENT
                     val rate = exchangeRatesTextInput.editText?.text.toDouble()
+                    val amountRub = amountTransact * rate
                     val date = SimpleDateFormat("dd/M/yyyy", Locale.US).format(Date())
-                    viewModel.onSaveTransaction(account.id, amountTransact, type, rate, date)
+                    viewModel.onSaveTransaction(account.id, amountTransact, type, rate,amountRub, date)
                     findNavController().navigateUp()
                     Log.d("saveButton", account.title)
                 }

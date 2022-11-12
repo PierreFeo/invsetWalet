@@ -89,35 +89,59 @@ class AccountViewHolder(
     }
 
     private fun TextView.formatDisplaySymbolCurrency(account: Account) {
-        text = when (account.currency) {
-            NewAccountFragment.USD_TYPE -> "${roundDouble(account.total)} $"
-            NewAccountFragment.RUB_TYPE -> "${roundDouble(account.total)} ₽"
-            NewAccountFragment.CHY_TYPE -> "${roundDouble(account.total)} ¥"
-            NewAccountFragment.EUR_TYPE -> "${roundDouble(account.total)} €"
-            else -> "${roundDouble(account.total)} "
+        val symbol = when (account.currency) {
+            NewAccountFragment.USD_TYPE -> " $"
+            NewAccountFragment.RUB_TYPE -> " ₽"
+            NewAccountFragment.CHY_TYPE -> " ¥"
+            NewAccountFragment.EUR_TYPE -> " €"
+            else -> " "
         }
+        text = "${account.total.toInt()} $symbol"
+
     }
 
     private fun TextView.formatDisplayResultPercent(account: Account) {
         text = if (TypeAccount.CURRENCY.getText(context) == account.type) {
-            Log.d("enum",TypeAccount.CURRENCY.getText(context))
-            "Валюта"
+            val percent =
+                (account.total * temporaryCurrency(account) / account.totalInRub) * 100 - 100
+            val resultInRub =
+                account.total * temporaryCurrency(account) - account.totalInRub
+
+            if (resultInRub > 0) setTextColor(resources.getColor(R.color.green))
+            if (resultInRub < 0) setTextColor(resources.getColor(R.color.red))
+
+            if (roundDouble(resultInRub) > 0.0 && roundDouble(percent) > 0.0)
+                "+${roundDouble(resultInRub)} (+${roundDouble(percent)} %)"
+            else
+                "${roundDouble(resultInRub)} (${roundDouble(percent)} %)"
+
         } else {
-            Log.d("enum2",TypeAccount.CURRENCY.getText(context))
-            "Не валюта"
+            "in developing"
         }
+
     }
 
     private fun roundDouble(double: Double): Double {
-        return (double * 100).roundToInt() / 100.0
+        return if (double.isNaN()) 0.0 else (double * 100).roundToInt() / 100.0
+    }
+
+    private fun temporaryCurrency(account: Account): Double {
+        return when (account.currency) {
+            NewAccountFragment.USD_TYPE -> TEMPORARY_CURRENT_RATE_USD
+            NewAccountFragment.EUR_TYPE -> TEMPORARY_CURRENT_RATE_EUR
+            NewAccountFragment.CHY_TYPE -> TEMPORARY_CURRENT_RATE_CNY
+            else -> {
+                0.0
+            }
+        }
     }
 
 
-
-
-
     companion object {
-        const val TEMPORARY_CURRENT_RATE = 61.28
+        const val TEMPORARY_CURRENT_RATE_USD = 60.77
+        const val TEMPORARY_CURRENT_RATE_EUR = 62.81
+        const val TEMPORARY_CURRENT_RATE_CNY = 8.53
+
     }
 }
 
