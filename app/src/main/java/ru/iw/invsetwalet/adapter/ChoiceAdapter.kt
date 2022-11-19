@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@ import ru.iw.invsetwalet.data.Account
 import ru.iw.invsetwalet.data.TypeAccount
 
 import ru.iw.invsetwalet.databinding.CardAccountFragmentBinding
+import ru.iw.invsetwalet.ui.NewAccountFragment
 
 internal class ChoiceAdapter(
     private val listener: AccountInteractionListener
@@ -58,12 +60,24 @@ class ChoiceViewHolder(
 
     fun bind(account: Account) = with(binding) {
         titleAccount.text = account.title
-        descriptionAccount.text = account.description
-        sumAccount.visibility = View.GONE
+        descriptionAccount.formatDisplaySymbolCurrency(account)
+        sumAccount.visibility =View.GONE
         percentAccount.visibility = View.GONE
-        root.setOnClickListener {
+        itemView.setOnClickListener {
             listener.onAccountClicked(account)
         }
+    }
+     fun TextView.formatDisplaySymbolCurrency(account: Account) {
+        val symbol = when (account.currency) {
+            NewAccountFragment.USD_TYPE -> " $"
+            NewAccountFragment.RUB_TYPE -> " ₽"
+            NewAccountFragment.CHY_TYPE -> " ¥"
+            NewAccountFragment.EUR_TYPE -> " €"
+            else -> " "
+        }
+
+        text = "${account.total.toInt()} $symbol"
+
     }
 }
 

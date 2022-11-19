@@ -64,7 +64,7 @@ class AccountViewHolder(
         percentAccount.formatDisplayResultPercent(account)
 
 
-        root.setOnLongClickListener {
+        itemView.setOnLongClickListener {
             PopupMenu(it.context, it).apply {
                 inflate(R.menu.popup)
                 setOnMenuItemClickListener {

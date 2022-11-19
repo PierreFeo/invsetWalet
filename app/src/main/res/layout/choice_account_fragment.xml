@@ -3,19 +3,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/accountsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/accounts"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/removeLine"
+        android:padding="@dimen/dp_16"/>
+
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/removeLine"
+        android:layout_width="40dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/remove_line_button_cor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerChoice"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="wrap_content"
         android:padding="@dimen/dp_16"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/accountsTextView"
         tools:listitem="@layout/card_account_fragment">
 
     </androidx.recyclerview.widget.RecyclerView>
