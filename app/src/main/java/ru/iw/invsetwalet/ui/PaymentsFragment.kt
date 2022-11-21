@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
 import ru.iw.invsetwalet.R
 import ru.iw.invsetwalet.adapter.AccountAdapter
 import ru.iw.invsetwalet.adapter.AccountViewHolder
@@ -41,16 +42,17 @@ class PaymentsFragment : Fragment() {
 
         when (arguments.let { it?.getString(HomeFragment.TYPE_TRANSACTION) }) {
             HomeFragment.ADD_PAYMENT -> {
-                Log.d("arguments", "addPaymentPaint")
-                //TODO CREATE FUN
+                Log.d("arguments", "click addPayment")
+                binding.allDebitViews.visibility= View.GONE
 
             }
             HomeFragment.ADD_EXPENSE -> {
-                Log.d("arguments", "addEXPENSEPaint")
+                Log.d("arguments", "click addExpense")
+                binding.allDepositViews.visibility= View.GONE
         //TODO CREATE FUN
             }
             HomeFragment.TRANSFER_BETWEEN_ACCOUNTS -> {
-                Log.d("arguments", "transferPaint")
+                Log.d("arguments", "click addTransfer")
                 //TODO CREATE FUN
             }
             else -> {
@@ -60,14 +62,13 @@ class PaymentsFragment : Fragment() {
         }
 
 
-        binding.addDebitCardView.setOnClickListener {
+        binding.addDepositCardView.setOnClickListener {
             showBottomSheet()
 
-
             viewModel.choiceAccountLiveEvent.observe(viewLifecycleOwner) { account ->
-                binding.chooseAccountDebit.text = account.title
-                binding.sumAccountDebit.formatDisplaySymbolCurrency(account)
-                binding.sumAccountDebit.visibility = View.VISIBLE
+                binding.chooseAccountDeposit.text = account.title
+                binding.sumAccountDeposit.formatDisplaySymbolCurrency(account)
+                binding.sumAccountDeposit.visibility = View.VISIBLE
                 dialog.hide()
 
                 binding.saveAccountButton.setOnClickListener {
@@ -94,6 +95,11 @@ class PaymentsFragment : Fragment() {
 
             }
 
+        }
+
+        binding.addDebitCardView.setOnClickListener {
+            Snackbar.make(it, "In developing", Snackbar.LENGTH_SHORT)
+                .show()
         }
 
 
