@@ -31,4 +31,28 @@
         <item name="cornerSize">100dp</item>
     </style>
 
+    <style name="ShapeAppearanceOverlay.MaterialComponents.BottomSheet" parent="">
+        <item name="cornerSizeTopRight">20dp</item>
+        <item name="cornerSizeTopLeft">20dp</item>
+
+
+    </style>
+
+
+    <style name="BottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialComponents.BottomSheet</item>
+
+
+
+
+    </style>
+
+
+    <style name="MyBottomSheetDialogTheme" parent="Base.ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+
+    </style>
+
+
+
 </resources>

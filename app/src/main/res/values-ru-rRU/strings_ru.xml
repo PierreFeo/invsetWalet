@@ -33,6 +33,11 @@
     <string name="ChooseAccount">Выберите счет</string>
     <string name="AmountPayment">Сумма пополнения</string>
     <string name="exchangeRates">Курс приобретения валюты</string>
+    <string name="accounts">Счета</string>
+    <string name="ChooseAccountForDebit">Откуда списать</string>
+    <string name="ChooseAccountForDeposit">Счет для зачисления</string>
+    <string name="profit">Прибыль</string>
+
 
 
 </resources>
