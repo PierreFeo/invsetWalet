@@ -2,6 +2,7 @@ package ru.iw.invsetwalet.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.TextView
@@ -103,12 +104,11 @@ class AccountViewHolder(
     private fun TextView.formatDisplayResultPercent(account: Account) {
         text = if (TypeAccount.CURRENCY.getText(context) == account.type) {
             val percent =
-                (account.total * temporaryCurrency(account) / account.totalInRub) * 100 - 100
+                (account.total * temporaryCurrency(account) / account.result) * 100 - 100
             val resultInRub =
-                account.total * temporaryCurrency(account) - account.totalInRub
+                account.total * temporaryCurrency(account) - account.result
 
-            if (resultInRub > 0) setTextColor(resources.getColor(R.color.green))
-            if (resultInRub < 0) setTextColor(resources.getColor(R.color.red))
+            switchTextColor(resultInRub)
 
             if (roundDouble(resultInRub) > 0.0 && roundDouble(percent) > 0.0)
                 "+${roundDouble(resultInRub)} (+${roundDouble(percent)} %)"
@@ -116,7 +116,13 @@ class AccountViewHolder(
                 "${roundDouble(resultInRub)} (${roundDouble(percent)} %)"
 
         } else {
-            "in developing"
+            val percent =
+                account.result / account.total * 100
+
+            switchTextColor(percent)
+            if (roundDouble(percent) > 0)
+                "+${roundDouble(account.result)} (+${roundDouble(percent)} %)"
+            else "${roundDouble(account.result)} (${roundDouble(percent)} %)"
         }
 
     }
@@ -134,6 +140,11 @@ class AccountViewHolder(
                 0.0
             }
         }
+    }
+
+    private fun TextView.switchTextColor(value: Double) {
+        if (value > 0) setTextColor(resources.getColor(R.color.green))
+        if (value < 0) setTextColor(resources.getColor(R.color.red))
     }
 
 

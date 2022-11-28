@@ -110,8 +110,8 @@ class AccountViewModel(application: Application) : AndroidViewModel(application)
         accountId: Int,
         amountTransact: Double,
         typeTransact: String,
-        ratesBuy: Double,
-        amountRub:Double,
+        ratesBuy: Double?,
+        result:Double,
         createDate: String
     ) {
         repository.saveTransaction(
@@ -120,7 +120,7 @@ class AccountViewModel(application: Application) : AndroidViewModel(application)
                 amountTransact = amountTransact,
                 typeTransact = typeTransact,
                 ratesBuy = ratesBuy,
-                amountRub = amountRub,
+                resultTransaction = result,
                 createDate = createDate
             )
         )

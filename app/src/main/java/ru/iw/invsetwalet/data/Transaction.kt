@@ -5,7 +5,7 @@ data class Transactions(
     val accountId: Int,
     val amountTransact: Double,
     val typeTransact: String,
-    val ratesBuy: Double,
-    val amountRub: Double,
+    val ratesBuy: Double?,
+    val resultTransaction: Double,
     val createDate: String
 )

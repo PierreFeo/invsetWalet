@@ -35,6 +35,7 @@
     <string name="accounts">Accounts</string>
     <string name="ChooseAccountForDebit">Select an account to debit</string>
     <string name="ChooseAccountForDeposit">Choose an account to deposit</string>
+    <string name="profit">Profit</string>
 
 
 

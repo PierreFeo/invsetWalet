@@ -28,9 +28,10 @@ data class TransactionsEntity(
     @ColumnInfo(name = " amount_transaction")
     val amountTransact: Double,
     @ColumnInfo(name = "rates_buy")
-    val ratesBuy: Double,
-    @ColumnInfo(name = "amount_in_rub")
-    val amountRub: Double,
+    val ratesBuy: Double?,
+    //TODO amount in rub chench result
+    @ColumnInfo(name = "resultTransaction")
+    val resultTransaction: Double,
     @ColumnInfo(name = "create_date")
     val createDate: String
 )
@@ -41,7 +42,7 @@ fun TransactionsEntity.toTransactions() = Transactions(
     typeTransact = typeTransact,
     amountTransact = amountTransact,
     ratesBuy = ratesBuy,
-    amountRub = amountRub,
+    resultTransaction = resultTransaction,
     createDate = createDate
 )
 
@@ -51,6 +52,6 @@ fun Transactions.toTransactionsEntity() = TransactionsEntity(
     typeTransact = typeTransact,
     amountTransact = amountTransact,
     ratesBuy = ratesBuy,
-    amountRub = amountRub,
+    resultTransaction = resultTransaction,
     createDate = createDate
 )

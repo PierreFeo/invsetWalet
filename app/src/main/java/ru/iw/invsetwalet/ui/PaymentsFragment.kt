@@ -9,28 +9,25 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import ru.iw.invsetwalet.R
-import ru.iw.invsetwalet.adapter.AccountAdapter
-import ru.iw.invsetwalet.adapter.AccountViewHolder
 import ru.iw.invsetwalet.adapter.ChoiceAdapter
 import ru.iw.invsetwalet.data.Account
+import ru.iw.invsetwalet.data.TypeAccount
 import ru.iw.invsetwalet.databinding.PaymentsFragmentBinding
 import ru.iw.invsetwalet.viewModel.AccountViewModel
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.math.log
-import kotlin.math.roundToInt
+import kotlin.math.E
 
 class PaymentsFragment : Fragment() {
     private lateinit var dialog: BottomSheetDialog
     private lateinit var recyclerView: RecyclerView
     private val viewModel: AccountViewModel by viewModels(ownerProducer = ::requireParentFragment)
+    lateinit var binding: PaymentsFragmentBinding
 
 
     override fun onCreateView(
@@ -38,18 +35,18 @@ class PaymentsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = PaymentsFragmentBinding.inflate(inflater, container, false)
+        binding = PaymentsFragmentBinding.inflate(inflater, container, false)
 
         when (arguments.let { it?.getString(HomeFragment.TYPE_TRANSACTION) }) {
             HomeFragment.ADD_PAYMENT -> {
                 Log.d("arguments", "click addPayment")
-                binding.allDebitViews.visibility= View.GONE
+                binding.allDebitViews.visibility = View.GONE
 
             }
             HomeFragment.ADD_EXPENSE -> {
                 Log.d("arguments", "click addExpense")
-                binding.allDepositViews.visibility= View.GONE
-        //TODO CREATE FUN
+                binding.allDepositViews.visibility = View.GONE
+                //TODO CREATE FUN
             }
             HomeFragment.TRANSFER_BETWEEN_ACCOUNTS -> {
                 Log.d("arguments", "click addTransfer")
@@ -66,31 +63,17 @@ class PaymentsFragment : Fragment() {
             showBottomSheet()
 
             viewModel.choiceAccountLiveEvent.observe(viewLifecycleOwner) { account ->
+                switchViewsPayments(account)
+
                 binding.chooseAccountDeposit.text = account.title
                 binding.sumAccountDeposit.formatDisplaySymbolCurrency(account)
                 binding.sumAccountDeposit.visibility = View.VISIBLE
                 dialog.hide()
 
                 binding.saveAccountButton.setOnClickListener {
-                    with(binding) {
-                        val amountTransact = paymentSumTextInput.editText?.text.toDouble()
-                        val type = PAYMENT
-                        val rate = exchangeRatesTextInput.editText?.text.toDouble()
-                        val amountRub = amountTransact * rate
-                        val date = SimpleDateFormat("dd/M/yyyy", Locale.US).format(Date())
-                        viewModel.onSaveTransaction(
-                            account.id,
-                            amountTransact,
-                            type,
-                            rate,
-                            amountRub,
-                            date
-                        )
-
-                        findNavController().navigateUp()
-                        Log.d("saveButton", account.title)
-                    }
-
+                    if (account.type == TypeAccount.CURRENCY.getText(requireContext()))
+                        saveCurrencyTypeAccount(account)
+                    else saveOtherTypeAccount(account)
                 }
 
             }
@@ -109,9 +92,7 @@ class PaymentsFragment : Fragment() {
         return binding.root
     }
 
-    companion object {
-        const val PAYMENT = "addPayment"
-    }
+
 
     private fun showBottomSheet() {
         val dialogView = layoutInflater.inflate(R.layout.choice_account_fragment, null)
@@ -124,9 +105,8 @@ class PaymentsFragment : Fragment() {
 
         recyclerView.adapter = choiceAdapter
 
-        viewModel.data.observe(viewLifecycleOwner) {
-            choiceAdapter.submitList(it)
-        }
+        viewModel.data.value.let { choiceAdapter.submitList(it) }
+
         dialog.show()
 
         removeButton.setOnClickListener {
@@ -147,6 +127,67 @@ class PaymentsFragment : Fragment() {
         }
         text = "${account.total.toInt()}$symbol"
 
+    }
+
+    private fun switchViewsPayments(account: Account) {
+        with(binding) {
+            if (account.type == TypeAccount.CURRENCY.getText(requireContext())) {
+                paymentSumTextInput.visibility = View.VISIBLE
+                exchangeRatesTextInput.visibility = View.VISIBLE
+                profitCheckBox.visibility = View.GONE
+            } else {
+                paymentSumTextInput.visibility = View.VISIBLE
+                exchangeRatesTextInput.visibility = View.GONE
+                profitCheckBox.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun saveCurrencyTypeAccount(account: Account) {
+        with(binding) {
+            val amountTransact = paymentSumTextInput.editText?.text.toDouble()
+            val type = PAYMENT
+            val rate = exchangeRatesTextInput.editText?.text.toDouble()
+            val result = amountTransact * rate
+            val date = SimpleDateFormat("dd/M/yyyy", Locale.US).format(Date())
+            viewModel.onSaveTransaction(
+                account.id,
+                amountTransact,
+                type,
+                rate,
+                result,
+                date
+            )
+
+            findNavController().navigateUp()
+            Log.d("saveButton", account.title)
+        }
+    }
+
+    private fun saveOtherTypeAccount(account: Account) {
+        with(binding) {
+            val amountTransact =
+                if (profitCheckBox.isChecked) EMPTY_TRANSITION else paymentSumTextInput.editText?.text.toDouble()
+            val type = PAYMENT
+            val result =
+                if (amountTransact == EMPTY_TRANSITION) paymentSumTextInput.editText?.text.toDouble() else EMPTY_TRANSITION
+            val date = SimpleDateFormat("dd/M/yyyy", Locale.US).format(Date())
+            viewModel.onSaveTransaction(
+                account.id,
+                amountTransact,
+                type,
+                null,
+                result,
+                date
+            )
+
+            findNavController().navigateUp()
+            Log.d("saveButton", binding.profitCheckBox.isChecked.toString())
+        }
+    }
+    companion object {
+        const val PAYMENT = "addPayment"
+        const val EMPTY_TRANSITION = 0.0
     }
 
 }
