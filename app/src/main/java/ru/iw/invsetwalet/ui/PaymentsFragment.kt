@@ -39,14 +39,61 @@ class PaymentsFragment : Fragment() {
 
         when (arguments.let { it?.getString(HomeFragment.TYPE_TRANSACTION) }) {
             HomeFragment.ADD_PAYMENT -> {
+                //TODO Create fun
+
                 Log.d("arguments", "click addPayment")
                 binding.allDebitViews.visibility = View.GONE
+
+                binding.addDepositCardView.setOnClickListener {
+                    showBottomSheet()
+
+                    viewModel.choiceAccountLiveEvent.observe(viewLifecycleOwner) { account ->
+                        switchViewsPayments(account)
+
+                        binding.chooseAccountDeposit.text = account.title
+                        binding.sumAccountDeposit.formatDisplaySymbolCurrency(account)
+                        binding.sumAccountDeposit.visibility = View.VISIBLE
+                        dialog.hide()
+
+                        binding.saveAccountButton.setOnClickListener {
+                            if (account.type == TypeAccount.CURRENCY.getText(requireContext()))
+                                saveCurrencyTypeAccount(account)
+                            else saveOtherTypeAccount(account)
+                        }
+
+                    }
+
+                }
 
             }
             HomeFragment.ADD_EXPENSE -> {
                 Log.d("arguments", "click addExpense")
                 binding.allDepositViews.visibility = View.GONE
-                //TODO CREATE FUN
+
+
+                binding.addDebitCardView.setOnClickListener {
+                    showBottomSheet()
+                    viewModel.choiceAccountLiveEvent.observe(viewLifecycleOwner) { account ->
+                        switchViewsPayments(account)
+
+
+                            //TODO im stop here
+
+                        binding.chooseAccountDebit.text = account.title
+                        binding.sumAccountDebit.formatDisplaySymbolCurrency(account)
+                        binding.sumAccountDebit.visibility = View.VISIBLE
+                        dialog.hide()
+
+//                        binding.saveAccountButton.setOnClickListener {
+//                            if (account.type == TypeAccount.CURRENCY.getText(requireContext()))
+//                                saveCurrencyTypeAccount(account)
+//                            else saveOtherTypeAccount(account)
+//                        }
+
+                    }
+
+
+                }
             }
             HomeFragment.TRANSFER_BETWEEN_ACCOUNTS -> {
                 Log.d("arguments", "click addTransfer")
@@ -59,31 +106,9 @@ class PaymentsFragment : Fragment() {
         }
 
 
-        binding.addDepositCardView.setOnClickListener {
-            showBottomSheet()
 
-            viewModel.choiceAccountLiveEvent.observe(viewLifecycleOwner) { account ->
-                switchViewsPayments(account)
 
-                binding.chooseAccountDeposit.text = account.title
-                binding.sumAccountDeposit.formatDisplaySymbolCurrency(account)
-                binding.sumAccountDeposit.visibility = View.VISIBLE
-                dialog.hide()
 
-                binding.saveAccountButton.setOnClickListener {
-                    if (account.type == TypeAccount.CURRENCY.getText(requireContext()))
-                        saveCurrencyTypeAccount(account)
-                    else saveOtherTypeAccount(account)
-                }
-
-            }
-
-        }
-
-        binding.addDebitCardView.setOnClickListener {
-            Snackbar.make(it, "In developing", Snackbar.LENGTH_SHORT)
-                .show()
-        }
 
 
 
