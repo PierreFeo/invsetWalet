@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -22,6 +23,7 @@ import ru.iw.invsetwalet.viewModel.AccountViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.E
+import kotlin.math.roundToInt
 
 class PaymentsFragment : Fragment() {
     private lateinit var dialog: BottomSheetDialog
@@ -39,61 +41,12 @@ class PaymentsFragment : Fragment() {
 
         when (arguments.let { it?.getString(HomeFragment.TYPE_TRANSACTION) }) {
             HomeFragment.ADD_PAYMENT -> {
-                //TODO Create fun
-
-                Log.d("arguments", "click addPayment")
                 binding.allDebitViews.visibility = View.GONE
-
-                binding.addDepositCardView.setOnClickListener {
-                    showBottomSheet()
-
-                    viewModel.choiceAccountLiveEvent.observe(viewLifecycleOwner) { account ->
-                        switchViewsPayments(account)
-
-                        binding.chooseAccountDeposit.text = account.title
-                        binding.sumAccountDeposit.formatDisplaySymbolCurrency(account)
-                        binding.sumAccountDeposit.visibility = View.VISIBLE
-                        dialog.hide()
-
-                        binding.saveAccountButton.setOnClickListener {
-                            if (account.type == TypeAccount.CURRENCY.getText(requireContext()))
-                                saveCurrencyTypeAccount(account)
-                            else saveOtherTypeAccount(account)
-                        }
-
-                    }
-
-                }
-
+                addPayment()
             }
             HomeFragment.ADD_EXPENSE -> {
-                Log.d("arguments", "click addExpense")
                 binding.allDepositViews.visibility = View.GONE
-
-
-                binding.addDebitCardView.setOnClickListener {
-                    showBottomSheet()
-                    viewModel.choiceAccountLiveEvent.observe(viewLifecycleOwner) { account ->
-                        switchViewsPayments(account)
-
-
-                            //TODO im stop here
-
-                        binding.chooseAccountDebit.text = account.title
-                        binding.sumAccountDebit.formatDisplaySymbolCurrency(account)
-                        binding.sumAccountDebit.visibility = View.VISIBLE
-                        dialog.hide()
-
-//                        binding.saveAccountButton.setOnClickListener {
-//                            if (account.type == TypeAccount.CURRENCY.getText(requireContext()))
-//                                saveCurrencyTypeAccount(account)
-//                            else saveOtherTypeAccount(account)
-//                        }
-
-                    }
-
-
-                }
+                addExpense()
             }
             HomeFragment.TRANSFER_BETWEEN_ACCOUNTS -> {
                 Log.d("arguments", "click addTransfer")
@@ -106,17 +59,8 @@ class PaymentsFragment : Fragment() {
         }
 
 
-
-
-
-
-
-
-
-
         return binding.root
     }
-
 
 
     private fun showBottomSheet() {
@@ -142,6 +86,48 @@ class PaymentsFragment : Fragment() {
     private fun Editable?.toDouble() = (toString().toDouble())
 
 
+    private fun addPayment() {
+        binding.addDepositCardView.setOnClickListener {
+            showBottomSheet()
+            viewModel.choiceAccountLiveEvent.observe(viewLifecycleOwner) { account ->
+                switchViewsPayments(account)
+                binding.chooseAccountDeposit.text = account.title
+                binding.sumAccountDeposit.formatDisplaySymbolCurrency(account)
+                binding.sumAccountDeposit.visibility = View.VISIBLE
+                dialog.hide()
+                binding.saveAccountButton.setOnClickListener {
+                    if (account.type == TypeAccount.CURRENCY.getText(requireContext()))
+                        saveCurrencyTypeAccount(account)
+                    else saveOtherTypeAccount(account)
+                }
+            }
+        }
+    }
+
+
+    private fun addExpense() {
+        binding.addDebitCardView.setOnClickListener {
+            showBottomSheet()
+            viewModel.choiceAccountLiveEvent.observe(viewLifecycleOwner) { account ->
+                switchViewsPayments(account)
+
+                binding.chooseAccountDebit.text = account.title
+                binding.sumAccountDebit.formatDisplaySymbolCurrency(account)
+                binding.sumAccountDebit.visibility = View.VISIBLE
+                dialog.hide()
+
+
+                binding.saveAccountButton.setOnClickListener {
+                    saveCurrencyExpenseTransaction(account)
+                }
+
+            }
+
+
+        }
+    }
+
+
     private fun TextView.formatDisplaySymbolCurrency(account: Account) {
         val symbol = when (account.currency) {
             NewAccountFragment.USD_TYPE -> " $"
@@ -160,10 +146,26 @@ class PaymentsFragment : Fragment() {
                 paymentSumTextInput.visibility = View.VISIBLE
                 exchangeRatesTextInput.visibility = View.VISIBLE
                 profitCheckBox.visibility = View.GONE
+
+                paymentSumDebitTextInput.visibility = View.VISIBLE
+                exchangeRatesDebitTextInput.visibility = View.VISIBLE
+                withdrawalCheckBox.visibility = View.VISIBLE
+
+                withdrawalCheckBox.setOnClickListener {
+                    val withdrawalCheckBox = it as CheckBox
+                    if (withdrawalCheckBox.isChecked) exchangeRatesDebitTextInput.visibility =
+                        View.GONE
+                    else exchangeRatesDebitTextInput.visibility =
+                        View.VISIBLE
+                }
             } else {
                 paymentSumTextInput.visibility = View.VISIBLE
                 exchangeRatesTextInput.visibility = View.GONE
                 profitCheckBox.visibility = View.VISIBLE
+
+                paymentSumDebitTextInput.visibility = View.VISIBLE
+                exchangeRatesDebitTextInput.visibility = View.GONE
+                withdrawalCheckBox.visibility = View.VISIBLE
             }
         }
     }
@@ -189,6 +191,30 @@ class PaymentsFragment : Fragment() {
         }
     }
 
+    private fun saveCurrencyExpenseTransaction(account: Account) {
+        with(binding) {
+            val amountTransact = paymentSumDebitTextInput.editText?.text.toDouble() * MINUS_SUM
+            val type = EXPENSE
+            val rate =
+                if (!withdrawalCheckBox.isChecked) exchangeRatesDebitTextInput.editText?.text.toDouble()
+                else account.result / account.total
+            val result = amountTransact * rate
+            val date = SimpleDateFormat("dd/M/yyyy", Locale.US).format(Date())
+
+            viewModel.onSaveTransaction(
+                account.id,
+                amountTransact,
+                type,
+                rate,
+                result,
+                date
+            )
+
+            Log.d("Average course", rate.toString())
+        }
+
+    }
+
     private fun saveOtherTypeAccount(account: Account) {
         with(binding) {
             val amountTransact =
@@ -196,6 +222,7 @@ class PaymentsFragment : Fragment() {
             val type = PAYMENT
             val result =
                 if (amountTransact == EMPTY_TRANSITION) paymentSumTextInput.editText?.text.toDouble() else EMPTY_TRANSITION
+
             val date = SimpleDateFormat("dd/M/yyyy", Locale.US).format(Date())
             viewModel.onSaveTransaction(
                 account.id,
@@ -209,10 +236,14 @@ class PaymentsFragment : Fragment() {
             findNavController().navigateUp()
             Log.d("saveButton", binding.profitCheckBox.isChecked.toString())
         }
+
     }
+
     companion object {
         const val PAYMENT = "addPayment"
+        const val EXPENSE = "addExpense"
         const val EMPTY_TRANSITION = 0.0
+        const val MINUS_SUM = -1
     }
 
 }
