@@ -1,8 +1,6 @@
 package ru.iw.invsetwalet.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.TextView
@@ -149,9 +147,9 @@ class AccountViewHolder(
 
 
     companion object {
-        const val TEMPORARY_CURRENT_RATE_USD = 60.77
-        const val TEMPORARY_CURRENT_RATE_EUR = 62.81
-        const val TEMPORARY_CURRENT_RATE_CNY = 8.53
+        const val TEMPORARY_CURRENT_RATE_USD = 70.33
+        const val TEMPORARY_CURRENT_RATE_EUR = 75.65
+        const val TEMPORARY_CURRENT_RATE_CNY = 9.8
 
     }
 }
