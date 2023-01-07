@@ -95,8 +95,14 @@ class AccountViewHolder(
             NewAccountFragment.EUR_TYPE -> " €"
             else -> " "
         }
-        text = "${account.total.toInt()} $symbol"
-
+            //TODO think about it
+        val sum =
+            if (account.type == TypeAccount.CURRENCY.getText(context)) {
+                "${account.total.toInt()} $symbol"
+            } else {
+                "${account.total.toInt() - account.result.toInt()} $symbol"
+            }
+        text = sum
     }
 
     private fun TextView.formatDisplayResultPercent(account: Account) {
