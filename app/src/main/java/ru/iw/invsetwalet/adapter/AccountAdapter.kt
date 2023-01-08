@@ -96,13 +96,13 @@ class AccountViewHolder(
             else -> " "
         }
             //TODO think about it
-        val sum =
-            if (account.type == TypeAccount.CURRENCY.getText(context)) {
-                "${account.total.toInt()} $symbol"
-            } else {
-                "${account.total.toInt() - account.result.toInt()} $symbol"
-            }
-        text = sum
+//        val sum =
+//            if (account.type == TypeAccount.CURRENCY.getText(context)) {
+//                "${account.total.toInt()} $symbol"
+//            } else {
+//                "${account.total.toInt() - account.result.toInt()} $symbol"
+//            }
+        text = "${account.total.toInt()} $symbol"
     }
 
     private fun TextView.formatDisplayResultPercent(account: Account) {

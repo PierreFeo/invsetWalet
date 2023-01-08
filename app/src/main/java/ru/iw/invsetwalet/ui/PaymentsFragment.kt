@@ -169,7 +169,7 @@ class PaymentsFragment : Fragment() {
 
                 paymentSumDebitTextInput.visibility = View.VISIBLE
                 exchangeRatesDebitTextInput.visibility = View.GONE
-                withdrawalCheckBox.visibility = View.VISIBLE
+                withdrawalCheckBox.visibility = View.GONE
             }
         }
     }
@@ -220,7 +220,26 @@ class PaymentsFragment : Fragment() {
     }
 
     private fun saveOtherExpenseTransaction(account: Account) {
-        Toast.makeText(context, "in developing", Toast.LENGTH_SHORT).show()
+
+        with(binding) {
+            val amountTransact = EMPTY_TRANSITION
+            val type = EXPENSE
+            val rate = null
+            val result = paymentSumDebitTextInput.editText?.text.toDouble() * MINUS_SUM
+            val date = SimpleDateFormat("dd/M/yyyy", Locale.US).format(Date())
+
+            viewModel.onSaveTransaction(
+                account.id,
+                amountTransact,
+                type,
+                rate,
+                result,
+                date
+            )
+            findNavController().navigateUp()
+        }
+
+
     }
 
 
