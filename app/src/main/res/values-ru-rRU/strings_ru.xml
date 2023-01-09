@@ -38,6 +38,7 @@
     <string name="ChooseAccountForDeposit">Счет для зачисления</string>
     <string name="profit">Прибыль</string>
     <string name="withdrawal">Изъятие</string>
+    <string name="AmountExpense">Сумма списания</string>
 
 
 
