@@ -2,6 +2,8 @@ package ru.iw.invsetwalet.viewModel
 
 
 import android.app.Application
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import ru.iw.invsetwalet.adapter.AccountInteractionListener
@@ -48,6 +50,10 @@ class AccountViewModel(application: Application) : AndroidViewModel(application)
     val editAccountLiveEvent = SingleLiveEvent<Account>()
     val navigateAddPaymentSingleLiveEvent = SingleLiveEvent<Boolean>()
     val choiceAccountLiveEvent = SingleLiveEvent<Account>()
+    val list = mutableMapOf<String, Account>()
+    val transferAccounts = SingleLiveEvent<MutableMap<String, Account>>()
+    val typeTransferLiveEvent = SingleLiveEvent<String>()
+
 
     override fun onAddClicked() {
 //        repository.add(
@@ -106,12 +112,18 @@ class AccountViewModel(application: Application) : AndroidViewModel(application)
         choiceAccountLiveEvent.value = account
     }
 
+    override fun onAccountClickedForTransfer(account: Account) {
+        list[typeTransferLiveEvent.value.toString()] = account
+                transferAccounts.value = list
+        println(list.size.toString())
+    }
+
     override fun onSaveTransaction(
         accountId: Int,
         amountTransact: Double,
         typeTransact: String,
         ratesBuy: Double?,
-        result:Double,
+        result: Double,
         createDate: String
     ) {
         repository.saveTransaction(
@@ -129,11 +141,14 @@ class AccountViewModel(application: Application) : AndroidViewModel(application)
     companion object {
         const val NEW_ID = 0
 
+
     }
 
     fun resetCurrentAccount() {
         currentAccount.value = null
     }
-
+fun switchTypeAccountsFotTransfer(typeTransfer:String){
+    typeTransferLiveEvent.value = typeTransfer
+}
 
 }

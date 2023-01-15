@@ -63,6 +63,8 @@ class PaymentsFragment : Fragment() {
         binding.addDepositCardView.setOnClickListener {
             showBottomSheet()
 
+
+
             viewModel.choiceAccountLiveEvent.observe(viewLifecycleOwner) { account ->
                 with(binding) {
                     choiceAccountDisplayViews(account, chooseAccountDeposit, sumAccountDeposit)
@@ -112,25 +114,22 @@ class PaymentsFragment : Fragment() {
     private fun transferBetweenAccounts() {
         with(binding) {
             addDebitCardView.setOnClickListener {
+                viewModel.switchTypeAccountsFotTransfer(EXPENSE)
                 showBottomSheet()
-                viewModel.choiceAccountLiveEvent.observe(viewLifecycleOwner) { accountDebit ->
-                    choiceAccountDisplayViews(accountDebit, chooseAccountDebit, sumAccountDebit)
-                    Log.d("transfer", accountDebit.id.toString())
-                    Log.d("transfer", "debit")
 
-                }
+
+
             }
             addDepositCardView.setOnClickListener {
+                viewModel.switchTypeAccountsFotTransfer(PAYMENT)
                 showBottomSheet()
-                viewModel.choiceAccountLiveEvent.observe(viewLifecycleOwner) { accountDeposit ->
-                    choiceAccountDisplayViews(
-                        accountDeposit,
-                        chooseAccountDeposit,
-                        sumAccountDeposit
-                    )
-                    Log.d("transfer", accountDeposit.id.toString())
-                    Log.d("transfer", "deposit")
-                }
+
+            }
+            viewModel.transferAccounts.observe(viewLifecycleOwner){
+                val acc = it[PAYMENT]
+                val acc2 = it[EXPENSE]
+                acc?.let { choiceAccountDisplayViews(it, chooseAccountDeposit, sumAccountDeposit) }
+                acc2?.let {choiceAccountDisplayViews(it, chooseAccountDebit, sumAccountDebit)  }
             }
         }
 

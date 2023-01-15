@@ -20,6 +20,7 @@ interface AccountInteractionListener {
     fun getAccountFromDataBase(id: Int): Account
     fun onAddPaymentClicked(boolean: Boolean)
     fun onAccountClicked(account: Account)
+    fun onAccountClickedForTransfer(account: Account)
     fun onSaveTransaction(
         accountId: Int,
         amountTransact: Double,
