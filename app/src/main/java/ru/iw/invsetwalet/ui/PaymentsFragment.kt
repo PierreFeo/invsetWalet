@@ -127,7 +127,7 @@ class PaymentsFragment : Fragment() {
             }
             viewModel.transferAccounts.observe(viewLifecycleOwner){
                 val acc = it[PAYMENT]
-                val acc2 = it[EXPENSE]
+                val acc23 = it[EXPENSE]
                 acc?.let { choiceAccountDisplayViews(it, chooseAccountDeposit, sumAccountDeposit) }
                 acc2?.let {choiceAccountDisplayViews(it, chooseAccountDebit, sumAccountDebit)  }
             }
